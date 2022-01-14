@@ -11,7 +11,7 @@ Step 1: Build the ItemToPurchase class with the following specifications:
 Example of print_item_cost() output:
 Bottled Water 10 @ $1 = $10
 
-Step 2: In the main section of your code, prompt the user for items and create objects of the ItemToPurchase class.
+Step 2: In the main section of your code, prompt the user for items and create8 objects of the ItemToPurchase class.
 
 Step 3: Add the costs of the two items together and output the total cost.
 
