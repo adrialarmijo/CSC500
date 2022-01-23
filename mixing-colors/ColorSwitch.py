@@ -1,36 +1,19 @@
 class ColorSwitch:
-    def color(self, colorSelected):
-        default = "Incorrect color entry"
-        return getattr(self, str(colorSelected), lambda: default)()
-    
-    def red(self):
-        return "red"
-    
-    def blue(self):
-        return "blue"
-    
-    def yellow(self):
-        return "yellow"
-    
-    def purple(self):
-        return "purple"
-    
-    def orange(self):
-        return "orange"
-    
-    def green(self):
-        return "green"
+    def __init__(self):
+        self.primaryColors = {1: 'red', 
+                              2: 'blue',
+                              4: 'yellow'}
 
-    def combine(self, colorSelected_1, colorSelect_2):
-        if ((colorSelected_1 or colorSelect_2) is self.ColorSwitch.red()):
-            if((colorSelected_1 or colorSelect_2) == ColorSwitch.blue()):
-                return ColorSwitch.purple()
-            if((colorSelected_1 or colorSelect_2) == ColorSwitch.yellow()):
-                return ColorSwitch.orange()
-        elif((colorSelected_1 or colorSelect_2) == ColorSwitch.blue()):
-            if((colorSelected_1 or colorSelect_2) == ColorSwitch.yellow()):
-                return ColorSwitch.green()
-        else:
-            return ColorSwitch.color()
+        self.mixedColors = {  3: 'purple',
+                              5: 'orange',
+                              6: 'green'}
 
-        
+    def combine(self, colorSelected_1, colorSelected_2) -> str:
+        if(colorSelected_1 == colorSelected_2):
+            return colorSelected_1
+        for key_1, color_1 in self.primaryColors.items():
+            if colorSelected_1 == color_1:
+                for key_2, color_2 in self.primaryColors.items():
+                    if colorSelected_2 == color_2:
+                        k = key_2 + key_1
+                        return self.mixedColors[k]
