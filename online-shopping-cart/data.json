@@ -1,0 +1,36 @@
+{
+    "items" : {
+        "item_0" : {
+            "itemName" : "chocolate",
+            "description" : "a yummy treat",
+            "price" : 2.25,
+            "quantity" : 0 ,
+            "itemCost" : 0.0  
+        },
+
+        "item_1" : {
+            "itemName" : "Nike Air",
+            "description" : "Size 10",
+            "price" : 185,
+            "quantity" : 0,
+            "itemCost" : 0.0   
+        },
+
+        "item_2" : {
+            "itemName" : "Plush Toy Animal",
+            "description" : "pink and round",
+            "price" : 25,
+            "quantity" : 0,
+            "itemCost" : 0.0   
+        },
+
+        "item_3" : {
+            "itemName" : "Water Bottle Flask",
+            "description" : "Blue, 22 oz",
+            "price" : 15,
+            "quantity" : 0,
+            "itemCost" : 0.0   
+        }
+
+    }
+}
