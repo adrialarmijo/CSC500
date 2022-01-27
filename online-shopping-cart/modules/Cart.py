@@ -48,50 +48,53 @@ class Cart():
             if(name in cart[i].getItemName()):
                 e.editItem(item, self)
             else:
-                print("Item not found in cart. Nothing modified.")
+                return("Item not found in cart. Nothing modified.\n")
 
     def printCart(self):
+        items = self.getItems()
         if(self.hasItems() == False):
-            return "Cart is empty, please add an item"
+            return "Cart is empty, please add an item\n"
         else:
-            return str(self.getItems())
+            return items
 
     def getItemCount(self):
         # Returns quantity of all items in cart. Has no parameters.
         items = self.getItems()
         totalItemQuantity = 0
         if(self.hasItems() == False):
-            print("Cart is empty, please add an item")
+            return("Cart is empty, please add an item\n")
         else:
             for i in range(len(items)):
                 totalItemQuantity += items[i].getItemQuantity()
-        return totalItemQuantity
+        return str(totalItemQuantity)
 
     def getCartCost(self):
         # Determines and returns the total cost of items in cart. Has no parameters.
         items = self.getItems()
         totalCost = 0.0
         if(self.hasItems() == False):
-            print("Cart is empty, please add an item")
+            return("Cart is empty, please add an item\n")
         else:
             for i in range(len(items)):
                 totalCost += items[i].getItemCost()
-        return totalCost
+        return str(totalCost)
 
-    def printTotal(self):
+    def printTotalItems(self):
          # Outputs total of objects in cart.
          # If cart is empty, output this message: SHOPPING CART IS EMPTY
         if(self.hasItems() == False):
-            print("SHOPPING CART IS EMPTY")
+            return("SHOPPING CART IS EMPTY\n")
         else:
             totalItemsInCart = len(self.getItems())
-            print("Your cart has " + str(totalItemsInCart) + " items")
-            
-    def printDiscriptions(self):
-        # Outputs each item's description
+            return("Number of items " + str(totalItemsInCart) + "\n")
+    
+    def printCartDescriptions(self):
         items = self.getItems()
-        if(self.hasItems() == False):
-            print("Cart is empty, please add an item")
-        else:
-            for i in range(len(items)):
-                print(items[i].getItemDescription())
+        names = []
+        descriptions = []
+        nameAndDescriptions = []
+        for i in range(len(items)):
+            names.append(items[i].getItemName())
+            descriptions.append(items[i].getItemDescription())
+            nameAndDescriptions.append(names[i] + ": " + descriptions[i])
+        return nameAndDescriptions
