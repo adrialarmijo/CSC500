@@ -1,62 +1,89 @@
 import tkinter as tk
+from turtle import back, left
 from modules.menu import addOption as a    
 from modules.menu import changeOption as c 
+from modules.tkinter import createWindow as cw
+from modules.tkinter import createLabel as cl
+from modules.tkinter import createEntry as ce
 
-def menuGUI(cart):
-    window = tk.Tk()
+def menuGUI(cart, customer):
     backgroundColor = "#34568B"
     optionTextColor = "#F7CAC9"
-    window.geometry("400x300")
-    window.config(bg=backgroundColor)
-    window.resizable(width=True, height=True)
-    window.title("Online Shopping Cart")
+    fontBig = ("Arial", 20)
+    fontNormal = ("Arial",12)
+    fontBold = ('Arial',12,"bold")
+    fg = "black"
 
-    l1 = tk.Label(window,text="Online Shopping Cart",font=("Arial", 20),fg="black",bg=backgroundColor)
-    l2 = tk.Label(window,font=("Arial",12),text="Select an option from the menu below",fg="black",bg=backgroundColor)
-    
-    l_add=tk.Label(window,text="a - Add item to cart",font=('Arial',12,"bold"),fg=optionTextColor,bg=backgroundColor)
-    l_rmv=tk.Label(window,text="r - Remove item from cart",font=('Arial',12,"bold"),fg=optionTextColor,bg=backgroundColor)
-    l_chg=tk.Label(window,text="c - Change and modify item",font=('Arial',12,"bold"),fg=optionTextColor,bg=backgroundColor)
-    l_des=tk.Label(window,text="i - Output items' descriptions",font=('Arial',12,"bold"),fg=optionTextColor,bg=backgroundColor)
-    l_crt=tk.Label(window,text="o - Output shopping cart",font=('Arial',12,"bold"),fg=optionTextColor,bg=backgroundColor)
-    l_qut=tk.Label(window,text="q - Quit",font=('Arial',12,"bold"),fg=optionTextColor,bg=backgroundColor)
+    window = cw.createWindow("Online Shopping Cart", backgroundColor)
 
-    e1=tk.Entry(window,width=5)
+    l1 = cl.createLabel(window, "Online Shopping Cart", fontNormal, fg, backgroundColor)
+    l1.pack()
+    l2 = cl.createLabel(window, "Please enter your name: ", fontNormal, fg, backgroundColor)
+    l2.place(x=30,y=60)
+    n = ce.createEntry(window, 15)
+    n.place(x=250,y=60)
+    l3 = cl.createLabel(window, "Please enter today's date: ", fontNormal, fg, backgroundColor)
+    l3.place(x=30,y=90)
+    d = ce.createEntry(window, 15)
+    d.place(x=250, y=90)
 
-    l1.place(x=70,y=5)
-    l2.place(x=10,y=40)
-    l_add.place(x=100,y=70)
-    l_rmv.place(x=100,y=95)
-    l_chg.place(x=100,y=120)
-    l_des.place(x=100,y=145)
-    l_crt.place(x=100,y=165)
-    l_qut.place(x=100,y=190)   
-    
-    e1.place(x=140,y=230)
-    
-    def getOption():
-        if(e1.get().lower() == 'a'):
+    def displayConsole(label, text):
+        label["text"] = "Console output: " + text 
+
+    def getOption(e1):
+        l_console = cl.createLabel(window,"Console output: ", fontNormal, fg, backgroundColor)
+        l_console.place(x=30,y=360)
+
+        if(e1.lower() == 'a'):
             a.addItemToCartMenu(cart)
-        if(e1.get().lower() == 'r'):
+        elif(e1.lower() == 'r'):
             if(cart.hasItems()):
                 cart.removeItem(cart.getFirstItem())
             else:
-                print("No items left to remove from cart")               
-        if(e1.get().lower() == 'c'):
+                displayConsole(l_console,"No items left to remove from cart")              
+        elif(e1.lower() == 'c'):
             if(cart.hasItems()):
                 c.changeOption(cart)
             else:
-                print("No items left in cart, please add an item first")
-        if(e1.get().lower() == 'i'):
-            return 1
-        if(e1.get().lower() == 'o'):
-            return 1
-        if(e1.get().lower() == 'q'):
+                displayConsole(l_console,"No items left in cart, please add an item first")
+        elif(e1.lower() == 'i'):
+            cart.printDiscriptions()
+        elif(e1.lower() == 'o'):
+            displayConsole(l_console,"Printing cart...\n" + cart.printCart())
+        elif(e1.lower() == 'q'):
             window.destroy()
-    
-    b1=tk.Button(window,text="Enter",font=("Arial",13),command=getOption)   
-    b1.place(x=190, y=230)
-    
+        else:
+            displayConsole(l_console,"Please enter the correct option choice")
+
+    def displayOptions():
+        l = cl.createLabel(window, "Select an option from the menu below", fontNormal, fg, backgroundColor)
+        l.place(x=30,y=160)
+        l_add = cl.createLabel(window,"a - Add item to cart", fontBold, optionTextColor, backgroundColor)
+        l_add.place(x=100,y=190)
+        l_rmv = cl.createLabel(window,"r - Remove item from cart", fontBold, optionTextColor, backgroundColor)
+        l_rmv.place(x=100,y=220)
+        l_chg = cl.createLabel(window,"c - Change and modify item", fontBold, optionTextColor, backgroundColor)
+        l_chg.place(x=100,y=250)
+        l_des = cl.createLabel(window,"i - Output items' descriptions",fontBold, optionTextColor, backgroundColor)
+        l_des.place(x=100,y=280)
+        l_crt = cl.createLabel(window,"o - Output shopping cart",fontBold, optionTextColor, backgroundColor)
+        l_crt.place(x=100,y=310)
+        l_qut = cl.createLabel(window,"q - Quit",fontBold, optionTextColor, backgroundColor)
+        l_qut.place(x=100,y=330)
+        e1=ce.createEntry(window, 7)     
+        e1.place(x=300,y=160)
+        b2=tk.Button(window,text="Enter",font=("Arial",13),command=lambda:getOption(e1.get()))   
+        b2.place(x=400, y=160)
+
+    def setCustomer():
+        customer.setName(n.get())
+        customer.setDate(d.get())
+        l4 = cl.createLabel(window, "Hello, " + customer.getName() + " today is " + customer.getDate(), fontNormal, fg, backgroundColor)
+        l4.place(x=30,y=120)
+        displayOptions()
+
+    b1=tk.Button(window,text="Enter",font=("Arial",13),command=setCustomer)   
+    b1.place(x=400, y=70)  
     
     window.mainloop()
 

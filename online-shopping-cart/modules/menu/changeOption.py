@@ -1,6 +1,4 @@
 import tkinter as tk
-from turtle import left, right
-
 
 def changeOption(cart):
     window = tk.Tk()
@@ -12,7 +10,8 @@ def changeOption(cart):
     window.title("Modify cart")
 
     def modifyItem():
-        cart.modify(list_items)
+        for item in lb.curselection():
+            cart.modify(list_items[item])
 
     l1 = tk.Label(window,text="Choose item to modify",font=("Arial", 20),fg="black",bg=backgroundColor)
     l1.pack()
@@ -22,11 +21,14 @@ def changeOption(cart):
 
     var = tk.StringVar()
     lb = tk.Listbox(window, listvariable=var)
-    list_items = cart.getItems()
+    list_items = cart.getItemsToModify()
 
-    for item in list_items:
-        lb.insert('end', item)
+    if(list_items):
+        for item in list_items:
+            lb.insert('end', item)
+    
     lb.pack()
+    
 
     b2 = tk.Button(window, text='Return to menu', width=15, height=2, command=window.destroy)
     b1.place(x=50, y=230)

@@ -47,6 +47,18 @@ class Item:
     def getItemQuantity(self):
         return self.itemQuantity
 
+    def hasDefaultValues(self):
+        name = self.getItemName()
+        description = self.getItemDescription()
+        price = self.getItemPrice()
+        quant = self.getItemQuantity()
+        
+        if((name and description != "none") and (price and quant != 0)):
+            defaultValues = True
+        else:
+            defaultValues = False  
+        return defaultValues
+
     def printItemCost(self): 
         return (self.getItemName() + " " + 
             str(self.getItemQuantity()) + 
